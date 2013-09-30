@@ -11,13 +11,13 @@
 //
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE
 // PROCESSED, ANY BLANK LINE SHOULD GO AFTER THE REQUIRES BELOW.
-
 //= require jquery
 //= require jquery_ujs
 //= require underscore
 //= require jquery.serializeJSON
 //= require_tree ./models
 //= require_tree ./views
+//= require_tree ../templates
 //= require_tree .
 
 (function(root) {
@@ -25,18 +25,26 @@
 
   PT.initialize = function(CURRENT_USER_ID, callback) {
 
-    // Get user photos - does this work?
-    var photos = PT.Photo.fetchByUserId(1)  //, new PT.Photo);
+    var $content = $("#content");
 
-    // What is this?
-    var photoListView = new PT.PhotosListView();
+    PT.PhotosListView.render($content);
 
-    // Does render work?
-    var $el = photoListView.render(photos);
-    $("#content").append($el);
+    PT.PhotoFormView.render();
+    // $( document ).ready(function() {
+    //
+    console.log(PT.Photo.fetchByUserId(1, function(result){
+      console.log(result);
+    }));
+
 
     $( document ).ready(function() {
-      console.log( "READY!");
+      this.$el.find("form").on("submit", function(event) {
+        event.preventDefault();
+        /// json serialize the result
+
+      })
     });
+
+
   }
 })(this);
