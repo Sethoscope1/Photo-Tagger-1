@@ -1,8 +1,9 @@
-;(function (root) {
+(function (root) {
+
   var PT = root.PT = (root.PT || {});
 
   var Photo = PT.Photo = function (data) {
-    this.attributes = _.extend({}, data)
+    this.attributes = _.extend({}, data);
   }
 
   Photo.all = [];
@@ -15,22 +16,43 @@
       type: "POST",
       data: that.attributes,
       success: function (response) {
-        _.extend(that, response);
+        _(that).extend(response);
         callback(that);
       }
     })
   };
 
   Photo.fetchByUserId = function (userId, callback) {
-    var $that = $(this)
+
+    var $that = $(this);
+    var photos = [];
+    // $.ajax({
+   //    // Needs Callback?
+   //    url: 'api/users/' + userID + '/photos',
+   //    type: 'GET',
+   //    success: function(photos) {
+   //      Photo.all.push(
+   //        _.map(photos, function(photo) {
+   //        new Photo(photo);
+   //      }))
+   //      return Photo.all;
+   //    };
+   //  });
+
+
     $.ajax({
       url: 'api/users/' + userId + '/photos',
       type: "GET",
       success: function (photoPojos) {
         Photo.all.push(function() {
-          return _.map(photoPojos), function(photoPojo) { callback(photoPojo) }
+          _.map(photos, function(photo) {
+            new Photo(photo);
+          })
+          // return _.map(photoPojos), function(photoPojo) { callback(photoPojo) }
         })
       }
     });
+    console.log(photos);
+    return photos;
   };
 })(this);

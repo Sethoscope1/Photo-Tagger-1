@@ -24,11 +24,19 @@
   var PT = root.PT = (root.PT || {});
 
   PT.initialize = function(CURRENT_USER_ID, callback) {
-    var photos = PT.Photo.fetchByUserId(1, new PT.Photo);
 
+    // Get user photos - does this work?
+    var photos = PT.Photo.fetchByUserId(1)  //, new PT.Photo);
+
+    // What is this?
     var photoListView = new PT.PhotosListView();
 
+    // Does render work?
     var $el = photoListView.render(photos);
     $("#content").append($el);
+
+    $( document ).ready(function() {
+      console.log( "READY!");
+    });
   }
 })(this);
